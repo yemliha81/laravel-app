@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
 use App\Models\Book; 
@@ -106,33 +107,4 @@ class BookController extends Controller
 
     }
 
-    public function comment_save(Request $request){
-        $book_id = $request->book_id;
-        $user_id = Auth::user()->id;
-        $comment_text = $request->comment_text;
-
-        $commented = Comment::where('user_id', $user_id)->where('book_id', $book_id)->count();
-
-        if($commented == 0){
-            try {
-
-                $comment = new Comment();
-                $comment->user_id = $user_id;
-                $comment->book_id = $book_id;
-                $comment->comment_text = $comment_text;
-                $comment->is_approved = 0;
-    
-                $comment->save();
-    
-                return "success";
-    
-            } catch (\Throwable $th) {
-                throw $th;
-            }
-        }else{
-            return "comment_exists";
-        }
-        
-
-    }
 }

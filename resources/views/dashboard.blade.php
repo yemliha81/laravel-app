@@ -31,6 +31,18 @@
                                     </div>
                                 </div>
                             </div>
+                            <div style="margin-top:20px; padding-top:15px; border-top:1px dashed #dddddd;">
+                                <div><b>Kullanıcı Yorumları</b></div>
+                                <div>
+                                @foreach($book->comments as $comment)
+                                    <div class="commet_div" style="padding: 8px;background: #f3f3f3;border-radius: 5px; margin-bottom:8px;">
+                                        <div style="font-size:10px;">{{$comment->user->name}} - {{$comment->created_at}}</div>
+                                        <div>{{$comment->comment_text}}</div>
+                                        
+                                    </div>
+                                @endforeach
+                            </div>
+                            </div>
                         </div>
                         
                     </div>
@@ -69,6 +81,7 @@
                 $.post('{{ route("comment_save") }}', data, function(response){
                     if(response == "success"){
                         alert('Yorumunuz onaylanmak üzere kaydedilmiştir!');
+                        $('.comment_box_'+book_id).fadeOut();
                     }else if(response == "comment_exists"){
                         alert("Bu kitaba daha önce yorum yaptınız!")
                     }

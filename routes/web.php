@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,6 +31,9 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/book_insert', [BookController::class, 'insert_books'])->middleware(['auth', 'verified'])->name('book_insert');
 Route::post('/book_is_read', [BookController::class, 'book_is_read'])->middleware(['auth', 'verified'])->name('book_is_read');
-Route::post('/comment_save', [BookController::class, 'comment_save'])->middleware(['auth', 'verified'])->name('comment_save');
+
+
+Route::post('/comment_save', [CommentController::class, 'comment_save'])->middleware(['auth', 'verified'])->name('comment_save');
+Route::post('/comment_approve', [CommentController::class, 'approve'])->middleware(['auth', 'verified'])->name('comment_approve');
 
 require __DIR__.'/auth.php';
